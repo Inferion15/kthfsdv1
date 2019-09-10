@@ -1,0 +1,53 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf500
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10140\viewh11500\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \'97\'97\'97 IMPLEMENTATION \'97\'97\'97\
+\
+Standard Extended Kalman Filter implementation with a state vector composed of GPS and IMU processed data.\
+On the prediction stage the method estimates the position at t+1 from the previous position and the kinematics equations through a Covariance Matrix that showcases the level of uncertainty. In the final, prediction, stage the estimated position is compared with the readings from the sensor and then is updated.\
+To be noticed that in this implementation time variance (dt) and yaw_rate are constant.\
+The final result state vector Xt_f contains at index 0 and 1 the distance from the previous state and updated step and at index 2 the updated course.\
+\
+\'97\'97\'97 Kalman Filtering \'97\'97\'97 \
+\
+1. What can happen if one measurement is delayed ?\
+Between 2 delayed measurements the time difference keeps increasing but the measured values remain either constant or null in case of a failure. If (dt) is increasing and the measured values on state k are the same as k-1, the values in the Covariance Matrix, on prediction step, will increase. This leads to a distribution less concentrated to the mean and also to an enlargement of area of uncertainty.\
+\
+2. IMU gets damaged. How does your implementation deals with it ?\
+The presented implementation extracts the x-axis acceleration, yaw, yaw_rate, speed and course. Since the unit cannot transmit any information the updated values will remain constant.\
+The prediction stage will treat the motion as linear and the car will gradually deviate from the true track.\
+\
+3. How will you deal with the case when a car is in a place where it has been before, but there is an error and localisation is showing a different place ?\
+If the car does not recognise a previous place the estimated values will be larger than the computed expected values, thus the EKF should be restarted and the start values should be retrieved from those previous to the restart point.\
+\
+\'97\'97\'97 Rule Questionnaire \'97\'97\'97\
+\
+Q1 \cf2 \expnd0\expndtw0\kerning0
+Which category is the most important in the Business Plan Presentation?\
+Content (20 pts)\
+\cf0 \kerning1\expnd0\expndtw0 \
+Q2 \cf2 \expnd0\expndtw0\kerning0
+The driver must be able to leave the car quickly in an emergency. What does the regulations state about driver egress time?\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 Driver should be able to exit the car in less than 4 seconds\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf2 \
+\
+Q3 Is it okay to adjust the angle of the winglets after technical inspection?\
+Yes\
+\
+Q4 How many lateral g's are simulated during the tilt test?\
+None of the above ( 1.7 Gs)\
+\
+Q5 How should the DV log data during the race?\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 Teams must implement the standardised data logger software provided by the officials in their hardware.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf2 \
+Q6 What level of wireless communication with the vehicle (excluding Remote Emergency System) is allowed during the race?\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 Only one-way-telemetry for information retrieval is allowed.}
